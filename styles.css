@@ -625,7 +625,6 @@ section {
     border-radius: 50%;
     position: absolute;
     left: 24px;
-    top: 50%;
     transform: translateY(-50%);
     z-index: 1;
 }
@@ -697,8 +696,7 @@ section {
     content: '•';
     color: var(--primary-color);
     font-weight: bold;
-    position: absolute;
-    left: -var(--spacing-md);
+    padding-right: 10px;
 }
 
 /* ===== PROJECTS SECTION ===== */

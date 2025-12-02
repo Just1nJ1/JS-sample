@@ -9,13 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-function initializeApp() {
-    // Initialize all modules
+async function initializeApp() {
+    // Load all dynamic content first
+    await loadAllData();
+
+    // Initialize all modules after content is loaded
     initNavigation();
     initThemeToggle();
     initTimelineAccordions();
     initProjectLightbox();
-    initBlogSearch();
+    initBlogSearch(); // Keeps its own data loading logic for now
     initPublicationFilters();
     initBackToTop();
     initFormHandling();
@@ -25,6 +28,348 @@ function initializeApp() {
 
     // Performance: Preload critical resources
     preloadCriticalResources();
+
+    // Initialize meta tag updates
+    updateMetaTags();
+    window.addEventListener('scroll', updateMetaTags);
+    window.addEventListener('resize', updateMetaTags);
+}
+
+// ===== DATA LOADING & RENDERING =====
+async function loadAllData() {
+    try {
+        const [configRes, educationRes, experienceRes, projectsRes, publicationsRes] = await Promise.all([
+            fetch('data/config.json'),
+            fetch('data/education.json'),
+            fetch('data/experience.json'),
+            fetch('data/projects.json'),
+            fetch('data/publications.json')
+        ]);
+
+        const config = await configRes.json();
+        const education = await educationRes.json();
+        const experience = await experienceRes.json();
+        const projects = await projectsRes.json();
+        const publications = await publicationsRes.json();
+
+        renderHero(config);
+        renderAbout(config);
+        renderContact(config);
+        renderEducation(education);
+        renderExperience(experience);
+        renderProjects(projects);
+        renderPublications(publications);
+
+    } catch (error) {
+        console.error('Error loading data:', error);
+        // Handle error (e.g., show offline message)
+    }
+}
+
+function renderHero(config) {
+    document.getElementById('hero-name').textContent = config.name;
+    document.getElementById('hero-tagline').textContent = config.tagline;
+    
+    const descContainer = document.getElementById('hero-description');
+    descContainer.innerHTML = `<p>${config.description}</p>`;
+
+    const profileContainer = document.querySelector('.profile-container');
+    if (config.images && config.images.profile) {
+        const img = document.createElement('img');
+        img.src = config.images.profile;
+        img.alt = `${config.name} - Professional Headshot`;
+        img.className = 'profile-photo';
+        img.loading = 'eager';
+        profileContainer.appendChild(img);
+    }
+}
+
+function renderAbout(config) {
+    const aboutText = document.getElementById('about-text');
+    const aboutImageContainer = document.getElementById('about-image-container');
+
+    // Render Bio Paragraphs
+    if (config.about && config.about.bio) {
+        config.about.bio.forEach(paragraph => {
+            const p = document.createElement('p');
+            p.textContent = paragraph;
+            aboutText.appendChild(p);
+        });
+    }
+
+    // Render Personal Info Section
+    const personalInfo = document.createElement('div');
+    personalInfo.className = 'personal-info';
+    
+    let socialLinksHtml = '';
+    if (config.social) {
+        socialLinksHtml = config.social.map(link => `
+            <a href="${link.url}" target="_blank" rel="noopener" aria-label="${link.name} Profile">
+                <span class="social-icon">${link.icon}</span> ${link.name}
+            </a>
+        `).join('');
+    }
+
+    personalInfo.innerHTML = `
+        <h3>Contact Information</h3>
+        <ul class="contact-list">
+            <li><strong>Email:</strong> <a href="mailto:${config.email}">${config.email}</a></li>
+            <li><strong>Location:</strong> ${config.location}</li>
+            <li><strong>Phone:</strong> <a href="tel:${config.phone.replace(/\D/g,'')}">${config.phone}</a></li>
+        </ul>
+
+        <h3>Social Links</h3>
+        <div class="social-links">
+            ${socialLinksHtml}
+        </div>
+    `;
+    aboutText.appendChild(personalInfo);
+
+    // Render About Image
+    if (config.images && config.images.about) {
+        const img = document.createElement('img');
+        img.src = config.images.about;
+        img.alt = `About ${config.name}`;
+        img.className = 'about-photo';
+        aboutImageContainer.appendChild(img);
+    }
+}
+
+function renderEducation(education) {
+    const timeline = document.getElementById('education-timeline');
+    
+    education.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'timeline-item';
+        el.setAttribute('data-expanded', 'false');
+
+        const detailsHtml = item.details.map(detail => {
+            if (detail.startsWith('Thesis:') || detail.startsWith('Research') || detail.startsWith('Teaching')) {
+                 return `<li>${detail}</li>`; // Just assuming list items for these based on original HTML
+            }
+            return `<p>${detail}</p>`;
+        }).join('');
+        
+        // Fix list grouping:
+        // The original HTML had mixed <p> and <ul>. 
+        // JSON structure: "details": ["GPA...", "Spec...", "Thesis...", ...]
+        // Let's group list-like items (Thesis, Research, etc.) into a UL if they look like list items.
+        // Simple heuristic: if it doesn't start with "GPA" or "Dean's", treat as list item? 
+        // Or just output all as <p> or <li> inside a <ul>?
+        // Original had <p> for GPA/Specialization and <ul> for others.
+        
+        let contentHtml = '';
+
+        if (item.overview.length > 0) {
+            contentHtml += `${item.overview.map(o => `<p>${o}</p>`).join('')}`;
+        }
+        if (item.details.length > 0) {
+            contentHtml += `<ul>${item.details.map(li => `<li>${li}</li>`).join('')}</ul>`;
+        }
+
+        el.innerHTML = `
+            <div class="timeline-header" tabindex="0">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">${item.title}</h3>
+                    <p class="timeline-subtitle">${item.subtitle}</p>
+                    <span class="timeline-date">${item.date}</span>
+                </div>
+                <div class="timeline-toggle">
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="timeline-details">
+                ${contentHtml}
+            </div>
+        `;
+        timeline.appendChild(el);
+    });
+}
+
+function renderExperience(experience) {
+    const timeline = document.getElementById('experience-timeline');
+    
+    experience.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'timeline-item';
+        el.setAttribute('data-expanded', 'false');
+        
+        // Work experience usually has a description (first item) and then bullets.
+        // JSON: "details": ["Led dev...", "Architected...", ...]
+        // First item as <p>, rest as <ul>
+        
+        let contentHtml = '';
+        if (item.overview.length > 0) {
+            contentHtml += `${item.overview.map(o => `<p>${o}</p>`).join('')}`;
+        }
+        if (item.details.length > 0) {
+            contentHtml += `<ul>${item.details.map(li => `<li>${li}</li>`).join('')}</ul>`;
+        }
+        // if (item.details.length > 0) {
+        //     contentHtml += `<p>${item.details[0]}</p>`;
+        //     if (item.details.length > 1) {
+        //         contentHtml += `<ul>${item.details.slice(1).map(li => `<li>${li}</li>`).join('')}</ul>`;
+        //     }
+        // }
+
+        el.innerHTML = `
+            <div class="timeline-header" tabindex="0">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">${item.title}</h3>
+                    <p class="timeline-subtitle">${item.subtitle}</p>
+                    <span class="timeline-date">${item.date}</span>
+                </div>
+                <div class="timeline-toggle">
+                    <span class="toggle-icon">+</span>
+                </div>
+            </div>
+            <div class="timeline-details">
+                ${contentHtml}
+            </div>
+        `;
+        timeline.appendChild(el);
+    });
+}
+
+function renderProjects(projects) {
+    const grid = document.getElementById('projects-grid');
+    
+    projects.forEach(project => {
+        const el = document.createElement('div');
+        el.className = 'project-card';
+        
+        const techTags = project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
+        
+        el.innerHTML = `
+            <div class="project-image">
+                <img src="${project.image}" alt="${project.title}" class="project-img" loading="lazy">
+                <div class="project-overlay">
+                    <div class="project-links">
+                        <a href="${project.links.demo}" class="project-link" aria-label="View live demo">🔗 Live Demo</a>
+                        <a href="${project.links.code}" target="_blank" rel="noopener" class="project-link" aria-label="View GitHub repo">💻 Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">${project.title}</h3>
+                <p class="project-description">${project.description}</p>
+                <div class="project-tech">
+                    ${techTags}
+                </div>
+            </div>
+        `;
+        grid.appendChild(el);
+    });
+}
+
+function renderPublications(publications) {
+    const list = document.getElementById('publications-list');
+    const filtersContainer = document.getElementById('publication-filters');
+    
+    // Extract unique years for filters
+    const years = [...new Set(publications.map(p => {
+        // Extract year from date string (e.g., "July 2023" -> "2023")
+        const match = p.date.match(/\d{4}/);
+        return match ? match[0] : '';
+    }))].filter(y => y).sort().reverse();
+
+    // Render filters
+    let filtersHtml = `<button class="filter-btn active" data-filter="all">All</button>`;
+    years.forEach(year => {
+        filtersHtml += `<button class="filter-btn" data-filter="${year}">${year}</button>`;
+    });
+    filtersContainer.innerHTML = filtersHtml;
+
+    // Render items
+    publications.forEach(pub => {
+        const year = pub.date.match(/\d{4}/) ? pub.date.match(/\d{4}/)[0] : '';
+        const el = document.createElement('div');
+        el.className = 'publication-item';
+        el.setAttribute('data-year', year);
+        el.setAttribute('data-category', pub.category);
+        
+        let linksHtml = '';
+        if (pub.links) {
+            for (const [key, url] of Object.entries(pub.links)) {
+                let icon = '🔗';
+                let label = key.toUpperCase();
+                if (key === 'pdf') icon = '📄';
+                if (key === 'cite') icon = '📚';
+                
+                linksHtml += `<a href="${url}" class="publication-link" aria-label="${label}">${icon} ${label}</a>`;
+            }
+        }
+
+        el.innerHTML = `
+            <div class="publication-content">
+                <h3 class="publication-title">${pub.title}</h3>
+                <p class="publication-authors">${pub.authors}</p>
+                <p class="publication-venue">${pub.venue}</p>
+                <p class="publication-date">${pub.date}</p>
+                <div class="publication-links">
+                    ${linksHtml}
+                </div>
+            </div>
+        `;
+        list.appendChild(el);
+    });
+}
+
+function renderContact(config) {
+    const contactInfo = document.getElementById('contact-info');
+    contactInfo.innerHTML = `
+        <div class="contact-item">
+            <h3>📧 Email</h3>
+            <p><a href="mailto:${config.email}">${config.email}</a></p>
+        </div>
+        <div class="contact-item">
+            <h3>📍 Location</h3>
+            <p>${config.location}</p>
+        </div>
+        <div class="contact-item">
+            <h3>📱 Phone</h3>
+            <p><a href="tel:${config.phone.replace(/\D/g,'')}">${config.phone}</a></p>
+        </div>
+        <div class="contact-item">
+            <h3>🕒 Response Time</h3>
+            <p>${config.responseTime}</p>
+        </div>
+    `;
+}
+
+function updateMetaTags() {
+    // Get all sections
+    const sections = document.querySelectorAll('section[id]');
+    let currentSection = null;
+    let maxVisibleArea = 0;
+
+    // Find the section with the most visible area
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+        const visibleWidth = Math.min(rect.right, window.innerWidth) - Math.max(rect.left, 0);
+        const visibleArea = visibleHeight * visibleWidth;
+
+        if (visibleArea > maxVisibleArea) {
+            maxVisibleArea = visibleArea;
+            currentSection = section;
+        }
+    });
+
+    if (currentSection) {
+        const sectionId = currentSection.id;
+        const metaTitle = document.querySelector('title');
+        const metaDescription = document.getElementById('meta-description');
+        
+        // Basic update logic - in a real app, this might come from config too
+        const baseTitle = "John Doe - Software Engineer";
+        metaTitle.textContent = `${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)} | ${baseTitle}`;
+        if (metaDescription) {
+             metaDescription.content = `View details about ${sectionId} section.`;
+        }
+    }
 }
 
 // ===== NAVIGATION SYSTEM =====
@@ -124,17 +469,22 @@ function initThemeToggle() {
 
 // ===== TIMELINE ACCORDIONS =====
 function initTimelineAccordions() {
-    const timelineHeaders = document.querySelectorAll('.timeline-header');
+    // Since content is dynamic, we need to use event delegation or attach listeners after render.
+    // initializeApp calls this AFTER loadAllData, so simple selection works if called there.
+    // However, to be safe and robust for future dynamic updates, we can use event delegation on the container.
 
-    timelineHeaders.forEach(header => {
-        header.addEventListener('click', () => {
+    const timelines = document.querySelectorAll('.timeline');
+    
+    timelines.forEach(timeline => {
+        timeline.addEventListener('click', (e) => {
+            const header = e.target.closest('.timeline-header');
+            if (!header) return;
+
             const timelineItem = header.closest('.timeline-item');
             const isExpanded = timelineItem.getAttribute('data-expanded') === 'true';
 
             // Close all other accordions in the same timeline
-            const timeline = timelineItem.closest('.timeline');
             const allItems = timeline.querySelectorAll('.timeline-item');
-
             allItems.forEach(item => {
                 item.setAttribute('data-expanded', 'false');
             });
@@ -142,9 +492,12 @@ function initTimelineAccordions() {
             // Toggle current accordion
             timelineItem.setAttribute('data-expanded', !isExpanded);
         });
-
-        // Keyboard support
-        header.addEventListener('keydown', (e) => {
+        
+        // Keyboard accessibility for delegation
+        timeline.addEventListener('keydown', (e) => {
+            const header = e.target.closest('.timeline-header');
+            if (!header) return;
+            
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 header.click();
@@ -159,26 +512,32 @@ function initProjectLightbox() {
     const lightboxImg = document.getElementById('lightbox-image');
     const lightboxCaption = document.getElementById('lightbox-caption');
     const lightboxClose = document.querySelector('.lightbox-close');
-    const projectImages = document.querySelectorAll('.project-img');
-
+    // Note: projectImages will be empty if called before render, but we call it after.
+    // Better to re-query or use delegation.
+    
     let currentImageIndex = 0;
     let imageArray = [];
 
-    // Initialize image array for navigation
-    projectImages.forEach((img, index) => {
-        imageArray.push({
-            src: img.src,
-            alt: img.alt,
-            index: index
-        });
-
+    // We need to rebuild the image array since projects are dynamic
+    // This function should be safe to call after renderProjects
+    const projectImages = document.querySelectorAll('.project-img');
+    
+    imageArray = Array.from(projectImages).map((img, index) => {
+        // Attach click listener
         img.addEventListener('click', (e) => {
             e.preventDefault();
             openLightbox(index);
         });
+        
+        return {
+            src: img.src,
+            alt: img.alt,
+            index: index
+        };
     });
 
     function openLightbox(index) {
+        if (index < 0 || index >= imageArray.length) return;
         currentImageIndex = index;
         const imageData = imageArray[index];
 
@@ -239,85 +598,19 @@ function initProjectLightbox() {
 }
 
 // ===== BLOG SEARCH FUNCTIONALITY =====
+let blogCards = [];
+let searchTimeout;
+let blogGrid;
+let searchInput;
+let searchBtn;
+
 function initBlogSearch() {
-    const searchInput = document.getElementById('blog-search');
-    const searchBtn = document.querySelector('.search-btn');
-    const blogGrid = document.getElementById('blogs-grid');
-    const blogCards = blogGrid.querySelectorAll('.blog-card');
+    searchInput = document.getElementById('blog-search');
+    searchBtn = document.querySelector('.search-btn');
+    blogGrid = document.getElementById('blogs-grid');
 
-    let searchTimeout;
-
-    function performSearch() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        let visibleCount = 0;
-
-        blogCards.forEach(card => {
-            const title = card.querySelector('.blog-title').textContent.toLowerCase();
-            const excerpt = card.querySelector('.blog-excerpt').textContent.toLowerCase();
-            const category = card.querySelector('.blog-category').textContent.toLowerCase();
-            const content = title + ' ' + excerpt + ' ' + category;
-
-            const isVisible = searchTerm === '' || content.includes(searchTerm);
-            card.style.display = isVisible ? 'block' : 'none';
-
-            if (isVisible) {
-                visibleCount++;
-
-                // Highlight search terms
-                highlightSearchTerms(card, searchTerm);
-            } else {
-                removeHighlights(card);
-            }
-        });
-
-        // Show message if no results
-        updateNoResultsMessage(visibleCount, searchTerm);
-    }
-
-    function highlightSearchTerms(card, searchTerm) {
-        if (!searchTerm) return;
-
-        const title = card.querySelector('.blog-title');
-        const excerpt = card.querySelector('.blog-excerpt');
-
-        highlightText(title, searchTerm);
-        highlightText(excerpt, searchTerm);
-    }
-
-    function highlightText(element, searchTerm) {
-        const text = element.textContent;
-        const regex = new RegExp(`(${searchTerm})`, 'gi');
-        element.innerHTML = text.replace(regex, '<mark>$1</mark>');
-    }
-
-    function removeHighlights(card) {
-        const title = card.querySelector('.blog-title');
-        const excerpt = card.querySelector('.blog-excerpt');
-
-        title.innerHTML = title.textContent;
-        excerpt.innerHTML = excerpt.textContent;
-    }
-
-    function updateNoResultsMessage(count, searchTerm) {
-        let messageElement = blogGrid.querySelector('.no-results');
-
-        if (count === 0 && searchTerm) {
-            if (!messageElement) {
-                messageElement = document.createElement('div');
-                messageElement.className = 'no-results';
-                messageElement.style.cssText = `
-                    text-align: center;
-                    padding: 2rem;
-                    color: var(--text-secondary);
-                    font-style: italic;
-                `;
-                blogGrid.appendChild(messageElement);
-            }
-            messageElement.textContent = `No blog posts found for "${searchTerm}". Try different keywords.`;
-        } else if (messageElement) {
-            messageElement.remove();
-        }
-    }
+    // Load blogs on initialization
+    loadBlogs();
 
     // Debounced search
     searchInput.addEventListener('input', () => {
@@ -336,38 +629,217 @@ function initBlogSearch() {
     });
 }
 
+async function discoverBlogFiles() {
+    const files = [];
+
+    // 1. Try to discover files via directory listing
+    try {
+        const response = await fetch('blogs/');
+        if (response.ok) {
+            const text = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            const anchors = Array.from(doc.querySelectorAll('a'));
+
+            anchors.forEach(anchor => {
+                const href = anchor.getAttribute('href');
+                // Skip parent directory, query strings, and the manifest file itself
+                if (!href || href === '../' || href.startsWith('?') || href.includes('blogs.json')) return;
+
+                if (href.toLowerCase().endsWith('.json')) {
+                     // Normalize path: ensure it starts with blogs/ if it's relative
+                     let path = href;
+                     // If href is just "file.json", prepend blogs/
+                     if (!path.includes('/') && !path.startsWith('http')) {
+                         path = `blogs/${path}`;
+                     }
+                     // If it starts with /, remove it for consistency if needed, or keep as absolute
+                     // For simple fetch, relative 'blogs/file.json' is usually safest if we are at root
+                     if (path.startsWith('/')) {
+                         path = path.substring(1);
+                     }
+                     
+                     files.push(path);
+                }
+            });
+        }
+    } catch (error) {
+        console.warn('Unable to auto-discover blog posts:', error);
+    }
+
+    // 2. Fallback to blogs.json if discovery returned nothing (or if we prefer it)
+    if (files.length === 0) {
+        try {
+            const response = await fetch('blogs/blogs.json');
+            if (response.ok) {
+                const data = await response.json();
+                // Handle simple array format
+                if (Array.isArray(data)) {
+                    return data.map(name => `blogs/${name}.json`);
+                }
+            }
+        } catch (error) {
+            console.warn('Fallback to blogs.json failed:', error);
+        }
+    }
+
+    return [...new Set(files)];
+}
+
+// Load blog posts from discovered files
+async function loadBlogs() {
+    try {
+        const blogFiles = await discoverBlogFiles();
+
+        blogGrid.innerHTML = ''; // Clear existing blog cards
+
+        for (const file of blogFiles) {
+            try {
+                const blogResponse = await fetch(file);
+                if (!blogResponse.ok) continue;
+                
+                const blogData = await blogResponse.json();
+
+                const blogCard = document.createElement('article');
+                blogCard.className = 'blog-card';
+                // Use placeholder image or add logic to load images if they exist in JSON
+                blogCard.innerHTML = `
+                    <div class="blog-image">
+                        <img src="${blogData.image}" alt="${blogData.title}" class="blog-img" loading="lazy">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">${blogData.date}</span>
+                            <span class="blog-category">${blogData.category}</span>
+                        </div>
+                        <h3 class="blog-title">${blogData.title}</h3>
+                        <p class="blog-excerpt">${blogData.excerpt}</p>
+                        <a href="${blogData.link}" class="blog-read-more">Read More →</a>
+                    </div>
+                `;
+
+                blogGrid.appendChild(blogCard);
+                blogCards.push(blogCard);
+            } catch (e) {
+                console.error(`Error loading blog file ${file}:`, e);
+            }
+        }
+
+        performSearch(); // Initial search to display all blogs
+    } catch (error) {
+        console.error('Error loading blogs:', error);
+    }
+}
+
+function performSearch() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    blogCards.forEach(card => {
+        const title = card.querySelector('.blog-title').textContent.toLowerCase();
+        const excerpt = card.querySelector('.blog-excerpt').textContent.toLowerCase();
+        const category = card.querySelector('.blog-category').textContent.toLowerCase();
+        const content = title + ' ' + excerpt + ' ' + category;
+
+        const isVisible = searchTerm === '' || content.includes(searchTerm);
+        card.style.display = isVisible ? 'block' : 'none';
+
+        if (isVisible) {
+            visibleCount++;
+            highlightSearchTerms(card, searchTerm);
+        } else {
+            removeHighlights(card);
+        }
+    });
+
+    updateNoResultsMessage(visibleCount, searchTerm);
+}
+
+function highlightSearchTerms(card, searchTerm) {
+    if (!searchTerm) return;
+
+    const title = card.querySelector('.blog-title');
+    const excerpt = card.querySelector('.blog-excerpt');
+
+    highlightText(title, searchTerm);
+    highlightText(excerpt, searchTerm);
+}
+
+function highlightText(element, searchTerm) {
+    // Simple safe highlight
+    const text = element.textContent;
+    if (!searchTerm) {
+            element.innerHTML = text;
+            return;
+    }
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    element.innerHTML = text.replace(regex, '<mark>$1</mark>');
+}
+
+function removeHighlights(card) {
+    const title = card.querySelector('.blog-title');
+    const excerpt = card.querySelector('.blog-excerpt');
+
+    // Reset to text content to remove markup
+    title.innerHTML = title.textContent;
+    excerpt.innerHTML = excerpt.textContent;
+}
+
+function updateNoResultsMessage(count, searchTerm) {
+    let messageElement = blogGrid.querySelector('.no-results');
+
+    if (count === 0 && searchTerm) {
+        if (!messageElement) {
+            messageElement = document.createElement('div');
+            messageElement.className = 'no-results';
+            messageElement.style.cssText = `
+                text-align: center;
+                padding: 2rem;
+                color: var(--text-secondary);
+                font-style: italic;
+            `;
+            blogGrid.appendChild(messageElement);
+        }
+        messageElement.textContent = `No blog posts found for "${searchTerm}". Try different keywords.`;
+    } else if (messageElement) {
+        messageElement.remove();
+    }
+}
+
 // ===== PUBLICATION FILTERS =====
 function initPublicationFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const publicationItems = document.querySelectorAll('.publication-item');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Update active button
-            filterButtons.forEach(btn => btn.classList.remove('active'));
+    const filtersContainer = document.getElementById('publication-filters');
+    const publicationsList = document.getElementById('publications-list');
+    
+    // Use delegation for filter buttons since they are dynamic
+    filtersContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('filter-btn')) {
+            const button = e.target;
+            const filter = button.getAttribute('data-filter');
+            
+            // Update active state
+            filtersContainer.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
-            const filter = button.getAttribute('data-filter');
-
-            publicationItems.forEach(item => {
+            const items = publicationsList.querySelectorAll('.publication-item');
+            items.forEach(item => {
                 const year = item.getAttribute('data-year');
-
+                
                 if (filter === 'all' || year === filter) {
                     item.style.display = 'block';
-                    // Animate in
+                    // Simple animation reset
                     item.style.opacity = '0';
                     item.style.transform = 'translateY(20px)';
-
                     requestAnimationFrame(() => {
-                        item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                        item.style.opacity = '1';
-                        item.style.transform = 'translateY(0)';
+                         item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                         item.style.opacity = '1';
+                         item.style.transform = 'translateY(0)';
                     });
                 } else {
                     item.style.display = 'none';
                 }
             });
-        });
+        }
     });
 }
 
@@ -480,7 +952,7 @@ function initLazyLoading() {
 
 // ===== KEYBOARD NAVIGATION =====
 function initKeyboardNavigation() {
-    // Skip to main content link (added via JavaScript for better UX)
+    // Skip to main content link
     const skipLink = document.createElement('a');
     skipLink.href = '#hero';
     skipLink.className = 'skip-link sr-only';
@@ -497,19 +969,8 @@ function initKeyboardNavigation() {
     document.addEventListener('click', () => {
         skipLink.classList.add('sr-only');
     });
-
-    // Focus management for accordions
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            const focusedElement = document.activeElement;
-
-            // Handle custom focusable elements
-            if (focusedElement.classList.contains('timeline-header')) {
-                e.preventDefault();
-                focusedElement.click();
-            }
-        }
-    });
+    
+    // Note: Event listeners for dynamic content (like accordions) are handled in their specific init functions via delegation or direct attachment.
 }
 
 // ===== SCROLL ANIMATIONS =====
@@ -528,6 +989,8 @@ function initScrollAnimations() {
     }, observerOptions);
 
     // Observe elements for animation
+    // We need to re-run this or use MutationObserver if we want to catch elements added dynamically.
+    // For now, since we initialize this AFTER content load, it should work fine.
     const animateElements = document.querySelectorAll(
         '.section-header, .about-content, .timeline-item, .project-card, .publication-item, .blog-card'
     );
@@ -539,64 +1002,11 @@ function initScrollAnimations() {
 
 // ===== PERFORMANCE OPTIMIZATIONS =====
 function preloadCriticalResources() {
-    // Preload above-the-fold images
-    const criticalImages = [
-        'assets/profile.jpg',
-        'assets/hero-bg.jpg'
-    ];
-
-    criticalImages.forEach(src => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.href = src;
-        document.head.appendChild(link);
-    });
+    // Preload above-the-fold images if possible, though they might be dynamic now.
+    // We can rely on the `loading="eager"` attribute on the profile image created in JS.
 }
-
-// ===== UTILITY FUNCTIONS =====
-
-// Debounce function for performance
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Throttle function for performance
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-// ===== ERROR HANDLING =====
-window.addEventListener('error', (e) => {
-    console.error('JavaScript error:', e.error);
-    // Could send to error tracking service in production
-});
-
-window.addEventListener('unhandledrejection', (e) => {
-    console.error('Unhandled promise rejection:', e.reason);
-    // Could send to error tracking service in production
-});
 
 // ===== ACCESSIBILITY IMPROVEMENTS =====
-
-// High contrast mode detection
 function detectHighContrast() {
     const testElement = document.createElement('div');
     testElement.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;background-color:#000;color:#fff;';
@@ -612,7 +1022,6 @@ function detectHighContrast() {
     }
 }
 
-// Reduced motion preference
 function respectReducedMotion() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -635,62 +1044,3 @@ function respectReducedMotion() {
 // Initialize accessibility features
 detectHighContrast();
 respectReducedMotion();
-
-// ===== BROWSER COMPATIBILITY =====
-
-// Polyfill for older browsers
-if (!Element.prototype.matches) {
-    Element.prototype.matches = Element.prototype.msMatchesSelector ||
-                                Element.prototype.webkitMatchesSelector;
-}
-
-if (!Element.prototype.closest) {
-    Element.prototype.closest = function(s) {
-        let el = this;
-        do {
-            if (el.matches(s)) return el;
-            el = el.parentElement || el.parentNode;
-        } while (el !== null && el.nodeType === 1);
-        return null;
-    };
-}
-
-// ===== CUSTOMIZATION HELPERS =====
-/*
-To customize this portfolio:
-
-1. Update personal information:
-   - Modify the HTML content in index.html
-   - Change contact details, social links, and bio
-
-2. Add new projects/publications/blogs:
-   - Copy existing HTML structure
-   - Update content and links
-   - Ensure proper data attributes for filtering
-
-3. Customize colors:
-   - Update CSS variables in styles.css :root section
-   - Modify color scheme while maintaining accessibility
-
-4. Add new sections:
-   - Create HTML structure with proper semantic markup
-   - Add corresponding CSS styles
-   - Initialize JavaScript functionality if needed
-
-5. Performance monitoring:
-   - Check console for any errors
-   - Use browser dev tools for performance analysis
-   - Consider code splitting for larger applications
-
-6. Hosting instructions:
-   - For local development: python -m http.server 8000
-   - For production: Use any static web server
-   - Enable gzip compression
-   - Set proper cache headers
-
-7. Analytics (optional):
-   - Add Google Analytics or similar tracking code
-   - Monitor user interactions and performance
-
-Remember to test across different browsers and devices!
-*/

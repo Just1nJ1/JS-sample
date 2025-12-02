@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Senior Software Engineer",
+    "subtitle": "TechCorp Inc.",
+    "date": "2021 - Present",
+    "overview": [
+      "Led development of microservices architecture serving 1M+ users"
+    ],
+    "details": [
+      "Architected and implemented scalable backend systems using Node.js and Python",
+      "Reduced system latency by 40% through optimization and caching strategies",
+      "Mentored 5 junior developers and established coding standards",
+      "Collaborated with cross-functional teams to deliver features ahead of schedule"
+    ]
+  },
+  {
+    "title": "Software Engineer",
+    "subtitle": "StartupXYZ",
+    "date": "2019 - 2021",
+    "overview": [
+      "Full-stack development for a fintech startup with 50k+ users"
+    ],
+    "details": [
+      "Built responsive web applications using React and Django",
+      "Implemented real-time data processing pipelines",
+      "Integrated payment systems and improved security protocols",
+      "Contributed to 300% user growth through feature enhancements"
+    ]
+  },
+  {
+    "title": "Research Intern",
+    "subtitle": "AI Research Lab, Stanford",
+    "date": "2018 - 2019",
+    "overview": [
+      "Research focused on machine learning applications in healthcare"
+    ],
+    "details": [
+      "Developed ML models for medical image analysis",
+      "Published 2 papers in top-tier conferences",
+      "Collaborated with medical professionals on real-world applications",
+      "Presented research at NeurIPS and ICML conferences"
+    ]
+  }
+]

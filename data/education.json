@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Master of Science in Computer Science",
+    "subtitle": "Stanford University",
+    "date": "2018 - 2020",
+    "overview": [
+      "GPA: 3.8/4.0",
+      "Specialization: Artificial Intelligence and Machine Learning"
+    ],
+    "details": [
+      "Thesis: \"Deep Learning Approaches for Natural Language Processing\"",
+      "Research Assistant in AI Lab",
+      "Teaching Assistant for CS 229 (Machine Learning)"
+    ]
+  },
+  {
+    "title": "Bachelor of Science in Computer Engineering",
+    "subtitle": "UC Berkeley",
+    "date": "2014 - 2018",
+    "overview": [
+      "GPA: 3.7/4.0",
+      "Dean's List for 6 semesters"
+    ],
+    "details": [
+      "President of Computer Science Club",
+      "Internship at Google during summer 2017",
+      "Final year project: Distributed Systems for IoT"
+    ]
+  }
+]

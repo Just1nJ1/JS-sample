@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Deep Learning Approaches for Natural Language Processing in Healthcare",
+    "authors": "John Doe, Jane Smith, Dr. Michael Johnson",
+    "venue": "International Conference on Machine Learning (ICML), 2023",
+    "date": "July 2023",
+    "category": "conference",
+    "links": {
+      "pdf": "#",
+      "arxiv": "#",
+      "cite": "#"
+    }
+  },
+  {
+    "title": "Scalable Microservices Architecture for Real-time Data Processing",
+    "authors": "John Doe, Sarah Wilson",
+    "venue": "Journal of Software Engineering, 2023",
+    "date": "March 2023",
+    "category": "journal",
+    "links": {
+      "pdf": "#",
+      "ieee": "#",
+      "cite": "#"
+    }
+  },
+  {
+    "title": "Computer Vision Techniques for Autonomous Vehicle Navigation",
+    "authors": "John Doe, Prof. Robert Chen, Lisa Park",
+    "venue": "Conference on Computer Vision and Pattern Recognition (CVPR), 2022",
+    "date": "June 2022",
+    "category": "conference",
+    "links": {
+      "pdf": "#",
+      "cvpr": "#",
+      "cite": "#"
+    }
+  },
+  {
+    "title": "Ethics in AI: Bias Detection and Mitigation Strategies",
+    "authors": "John Doe, Dr. Emily Rodriguez",
+    "venue": "Workshop on Fairness in Artificial Intelligence, NeurIPS 2022",
+    "date": "December 2022",
+    "category": "workshop",
+    "links": {
+      "pdf": "#",
+      "neurips": "#",
+      "cite": "#"
+    }
+  },
+  {
+    "title": "Distributed Systems Design Patterns for Cloud Computing",
+    "authors": "John Doe",
+    "venue": "ACM Transactions on Computer Systems, 2021",
+    "date": "September 2021",
+    "category": "journal",
+    "links": {
+      "pdf": "#",
+      "acm": "#",
+      "cite": "#"
+    }
+  }
+]

@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>John Doe - Software Engineer | Researcher | Blogger</title>
-    <meta name="description" content="Personal portfolio of John Doe, showcasing experience in software engineering, research, and blogging.">
-    <meta name="keywords" content="software engineer, researcher, blogger, portfolio, web development">
-    <meta name="author" content="John Doe">
+    <meta name="description" id="meta-description">
+    <meta name="keywords" id="meta-keywords">
+    <meta name="author" id="meta-author">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://johndoe.dev/">
-    <meta property="og:title" content="John Doe - Software Engineer | Researcher | Blogger">
-    <meta property="og:description" content="Personal portfolio showcasing my journey in software engineering, research, and blogging.">
+    <meta property="og:title" id="og-title">
+    <meta property="og:description" id="og-description">
     <meta property="og:image" content="assets/profile.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://johndoe.dev/">
-    <meta property="twitter:title" content="John Doe - Software Engineer | Researcher | Blogger">
-    <meta property="twitter:description" content="Personal portfolio showcasing my journey in software engineering, research, and blogging.">
+    <meta property="twitter:title" id="twitter-title">
+    <meta property="twitter:description" id="twitter-description">
     <meta property="twitter:image" content="assets/profile.jpg">
 
     <!-- Favicon -->
@@ -32,7 +32,6 @@
     <!-- Preload critical resources -->
     <link rel="preload" href="styles.css" as="style">
     <link rel="preload" href="script.js" as="script">
-    <link rel="preload" href="assets/profile.jpg" as="image">
 </head>
 <body>
     <!-- Navigation -->
@@ -74,12 +73,10 @@
                 <div class="hero-content">
                     <div class="hero-text">
                         <h1 class="hero-title" id="hero-title">
-                            <span class="hero-name">John Doe</span>
+                            <span class="hero-name" id="hero-name"></span>
                         </h1>
-                        <p class="hero-tagline">Software Engineer | Researcher | Blogger</p>
-                        <div class="hero-description">
-                            <p>Passionate about creating innovative solutions and sharing knowledge through code and writing.</p>
-                        </div>
+                        <p class="hero-tagline" id="hero-tagline"></p>
+                        <div class="hero-description" id="hero-description"></div>
                         <div class="hero-buttons">
                             <a href="#projects" class="btn btn-primary">View My Work</a>
                             <a href="#contact" class="btn btn-secondary">Get In Touch</a>
@@ -87,7 +84,7 @@
                     </div>
                     <div class="hero-image">
                         <div class="profile-container">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9IjEwNSIgcj0iNDAiIGZpbGw9IiMwMDdCRkYiLz4KPGRhdGEgeD0iNjAiIHk9IjE4MCIgZmlsbD0iIzAwN0JGRiI+SGVsbG8hPC9kYXRhPgo8L3N2Zz4K" alt="John Doe - Professional Headshot" class="profile-photo" loading="eager">
+                            <!-- Profile image will be loaded here -->
                         </div>
                     </div>
                 </div>
@@ -108,35 +105,11 @@
                     <p class="section-subtitle">Get to know me better</p>
                 </div>
                 <div class="about-content">
-                    <div class="about-text">
-                        <p>Hello! I'm John Doe, a passionate software engineer with over 5 years of experience in full-stack development, machine learning, and technical writing. Currently based in San Francisco, CA, I specialize in building scalable web applications and conducting research in artificial intelligence.</p>
-
-                        <p>When I'm not coding, you can find me writing technical blogs, contributing to open-source projects, or exploring the latest developments in AI and software engineering. I believe in continuous learning and sharing knowledge with the developer community.</p>
-
-                        <div class="personal-info">
-                            <h3>Contact Information</h3>
-                            <ul class="contact-list">
-                                <li><strong>Email:</strong> <a href="mailto:john.doe@example.com">john.doe@example.com</a></li>
-                                <li><strong>Location:</strong> San Francisco, CA</li>
-                                <li><strong>Phone:</strong> <a href="tel:+1234567890">(123) 456-7890</a></li>
-                            </ul>
-
-                            <h3>Social Links</h3>
-                            <div class="social-links">
-                                <a href="https://linkedin.com/in/johndoe" target="_blank" rel="noopener" aria-label="LinkedIn Profile">
-                                    <span class="social-icon">💼</span> LinkedIn
-                                </a>
-                                <a href="https://github.com/johndoe" target="_blank" rel="noopener" aria-label="GitHub Profile">
-                                    <span class="social-icon">💻</span> GitHub
-                                </a>
-                                <a href="https://twitter.com/johndoe" target="_blank" rel="noopener" aria-label="Twitter Profile">
-                                    <span class="social-icon">🐦</span> Twitter
-                                </a>
-                            </div>
-                        </div>
+                    <div class="about-text" id="about-text">
+                        <!-- About text and personal info will be loaded here -->
                     </div>
-                    <div class="about-image">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEzNSIgcj0iNjAiIGZpbGw9IiMwMDdCRkYiLz4KPGRhdGEgeD0iMTAwIiB5PSIyODAiIGZpbGw9IiMwMDdCRkYiPkFib3V0IE1lPC9kYXRhPgo8L3N2Zz4K" alt="About John Doe" class="about-photo">
+                    <div class="about-image" id="about-image-container">
+                        <!-- About image will be loaded here -->
                     </div>
                 </div>
             </div>
@@ -150,51 +123,7 @@
                     <p class="section-subtitle">My academic journey</p>
                 </div>
                 <div class="timeline" id="education-timeline">
-                    <div class="timeline-item" data-expanded="false">
-                        <div class="timeline-header" onclick="toggleTimelineItem(this)">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h3 class="timeline-title">Master of Science in Computer Science</h3>
-                                <p class="timeline-subtitle">Stanford University</p>
-                                <span class="timeline-date">2018 - 2020</span>
-                            </div>
-                            <div class="timeline-toggle">
-                                <span class="toggle-icon">+</span>
-                            </div>
-                        </div>
-                        <div class="timeline-details">
-                            <p>GPA: 3.8/4.0</p>
-                            <p>Specialization: Artificial Intelligence and Machine Learning</p>
-                            <ul>
-                                <li>Thesis: "Deep Learning Approaches for Natural Language Processing"</li>
-                                <li>Research Assistant in AI Lab</li>
-                                <li>Teaching Assistant for CS 229 (Machine Learning)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item" data-expanded="false">
-                        <div class="timeline-header" onclick="toggleTimelineItem(this)">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h3 class="timeline-title">Bachelor of Science in Computer Engineering</h3>
-                                <p class="timeline-subtitle">UC Berkeley</p>
-                                <span class="timeline-date">2014 - 2018</span>
-                            </div>
-                            <div class="timeline-toggle">
-                                <span class="toggle-icon">+</span>
-                            </div>
-                        </div>
-                        <div class="timeline-details">
-                            <p>GPA: 3.7/4.0</p>
-                            <p>Dean's List for 6 semesters</p>
-                            <ul>
-                                <li>President of Computer Science Club</li>
-                                <li>Internship at Google during summer 2017</li>
-                                <li>Final year project: Distributed Systems for IoT</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <!-- Education items will be loaded here -->
                 </div>
             </div>
         </section>
@@ -207,74 +136,7 @@
                     <p class="section-subtitle">My professional journey</p>
                 </div>
                 <div class="timeline" id="experience-timeline">
-                    <div class="timeline-item" data-expanded="false">
-                        <div class="timeline-header" onclick="toggleTimelineItem(this)">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h3 class="timeline-title">Senior Software Engineer</h3>
-                                <p class="timeline-subtitle">TechCorp Inc.</p>
-                                <span class="timeline-date">2021 - Present</span>
-                            </div>
-                            <div class="timeline-toggle">
-                                <span class="toggle-icon">+</span>
-                            </div>
-                        </div>
-                        <div class="timeline-details">
-                            <p>Led development of microservices architecture serving 1M+ users</p>
-                            <ul>
-                                <li>Architected and implemented scalable backend systems using Node.js and Python</li>
-                                <li>Reduced system latency by 40% through optimization and caching strategies</li>
-                                <li>Mentored 5 junior developers and established coding standards</li>
-                                <li>Collaborated with cross-functional teams to deliver features ahead of schedule</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item" data-expanded="false">
-                        <div class="timeline-header" onclick="toggleTimelineItem(this)">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h3 class="timeline-title">Software Engineer</h3>
-                                <p class="timeline-subtitle">StartupXYZ</p>
-                                <span class="timeline-date">2019 - 2021</span>
-                            </div>
-                            <div class="timeline-toggle">
-                                <span class="toggle-icon">+</span>
-                            </div>
-                        </div>
-                        <div class="timeline-details">
-                            <p>Full-stack development for a fintech startup with 50k+ users</p>
-                            <ul>
-                                <li>Built responsive web applications using React and Django</li>
-                                <li>Implemented real-time data processing pipelines</li>
-                                <li>Integrated payment systems and improved security protocols</li>
-                                <li>Contributed to 300% user growth through feature enhancements</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item" data-expanded="false">
-                        <div class="timeline-header" onclick="toggleTimelineItem(this)">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h3 class="timeline-title">Research Intern</h3>
-                                <p class="timeline-subtitle">AI Research Lab, Stanford</p>
-                                <span class="timeline-date">2018 - 2019</span>
-                            </div>
-                            <div class="timeline-toggle">
-                                <span class="toggle-icon">+</span>
-                            </div>
-                        </div>
-                        <div class="timeline-details">
-                            <p>Research focused on machine learning applications in healthcare</p>
-                            <ul>
-                                <li>Developed ML models for medical image analysis</li>
-                                <li>Published 2 papers in top-tier conferences</li>
-                                <li>Collaborated with medical professionals on real-world applications</li>
-                                <li>Presented research at NeurIPS and ICML conferences</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <!-- Experience items will be loaded here -->
                 </div>
             </div>
         </section>
@@ -286,138 +148,8 @@
                     <h2 class="section-title">Projects</h2>
                     <p class="section-subtitle">Featured work and side projects</p>
                 </div>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDE8L3RleHQ+Cjwvc3ZnPgo=" alt="AI Chatbot Project" class="project-img" loading="lazy">
-                            <div class="project-overlay">
-                                <div class="project-links">
-                                    <a href="#" class="project-link" aria-label="View live demo">🔗 Live Demo</a>
-                                    <a href="https://github.com/johndoe/ai-chatbot" target="_blank" rel="noopener" class="project-link" aria-label="View GitHub repo">💻 Code</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">AI-Powered Chatbot</h3>
-                            <p class="project-description">Intelligent conversational AI built with Python and TensorFlow. Features natural language processing and integrates with multiple messaging platforms.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">TensorFlow</span>
-                                <span class="tech-tag">NLP</span>
-                                <span class="tech-tag">Flask</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDI8L3RleHQ+Cjwvc3ZnPgo=" alt="E-commerce Platform Project" class="project-img" loading="lazy">
-                            <div class="project-overlay">
-                                <div class="project-links">
-                                    <a href="#" class="project-link" aria-label="View live demo">🔗 Live Demo</a>
-                                    <a href="https://github.com/johndoe/ecommerce-platform" target="_blank" rel="noopener" class="project-link" aria-label="View GitHub repo">💻 Code</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">E-commerce Platform</h3>
-                            <p class="project-description">Full-stack e-commerce solution with payment integration, inventory management, and admin dashboard. Built with modern web technologies.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">Node.js</span>
-                                <span class="tech-tag">MongoDB</span>
-                                <span class="tech-tag">Stripe</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMDA3QkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDM8L3RleHQ+Cjwvc3ZnPgo=" alt="Data Visualization Dashboard Project" class="project-img" loading="lazy">
-                            <div class="project-overlay">
-                                <div class="project-links">
-                                    <a href="#" class="project-link" aria-label="View live demo">🔗 Live Demo</a>
-                                    <a href="https://github.com/johndoe/data-viz-dashboard" target="_blank" rel="noopener" class="project-link" aria-label="View GitHub repo">💻 Code</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Data Visualization Dashboard</h3>
-                            <p class="project-description">Interactive dashboard for data analysis with real-time charts and filtering. Processes large datasets and provides actionable insights.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">D3.js</span>
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Pandas</span>
-                                <span class="tech-tag">Flask</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDQ8L3RleHQ+Cjwvc3ZnPgo=" alt="Mobile App Project" class="project-img" loading="lazy">
-                            <div class="project-overlay">
-                                <div class="project-links">
-                                    <a href="#" class="project-link" aria-label="View live demo">🔗 Live Demo</a>
-                                    <a href="https://github.com/johndoe/mobile-app" target="_blank" rel="noopener" class="project-link" aria-label="View GitHub repo">💻 Code</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Fitness Tracking App</h3>
-                            <p class="project-description">Cross-platform mobile app for fitness tracking with workout plans, progress monitoring, and social features. Available on iOS and Android.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">React Native</span>
-                                <span class="tech-tag">Firebase</span>
-                                <span class="tech-tag">Redux</span>
-                                <span class="tech-tag">Node.js</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDU8L3RleHQ+Cjwvc3ZnPgo=" alt="IoT Smart Home Project" class="project-img" loading="lazy">
-                            <div class="project-overlay">
-                                <div class="project-links">
-                                    <a href="#" class="project-link" aria-label="View live demo">🔗 Live Demo</a>
-                                    <a href="https://github.com/johndoe/smart-home" target="_blank" rel="noopener" class="project-link" aria-label="View GitHub repo">💻 Code</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Smart Home IoT System</h3>
-                            <p class="project-description">IoT platform for smart home automation with device control, energy monitoring, and security features. Built with Raspberry Pi and cloud integration.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Raspberry Pi</span>
-                                <span class="tech-tag">MQTT</span>
-                                <span class="tech-tag">AWS IoT</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDY8L3RleHQ+Cjwvc3ZnPgo=" alt="ML Research Project" class="project-img" loading="lazy">
-                            <div class="project-overlay">
-                                <div class="project-links">
-                                    <a href="#" class="project-link" aria-label="View live demo">🔗 Live Demo</a>
-                                    <a href="https://github.com/johndoe/ml-research" target="_blank" rel="noopener" class="project-link" aria-label="View GitHub repo">💻 Code</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Computer Vision Research</h3>
-                            <p class="project-description">Research project on advanced computer vision techniques for object detection and image segmentation. Published in top-tier conferences.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">PyTorch</span>
-                                <span class="tech-tag">OpenCV</span>
-                                <span class="tech-tag">CUDA</span>
-                                <span class="tech-tag">Jupyter</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="projects-grid" id="projects-grid">
+                    <!-- Projects will be loaded here -->
                 </div>
             </div>
         </section>
@@ -430,83 +162,12 @@
                     <p class="section-subtitle">Research papers and articles</p>
                 </div>
                 <div class="publications-controls">
-                    <div class="filter-controls">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="2023">2023</button>
-                        <button class="filter-btn" data-filter="2022">2022</button>
-                        <button class="filter-btn" data-filter="2021">2021</button>
+                    <div class="filter-controls" id="publication-filters">
+                        <!-- Filters will be loaded here -->
                     </div>
                 </div>
                 <div class="publications-list" id="publications-list">
-                    <div class="publication-item" data-year="2023" data-category="conference">
-                        <div class="publication-content">
-                            <h3 class="publication-title">Deep Learning Approaches for Natural Language Processing in Healthcare</h3>
-                            <p class="publication-authors">John Doe, Jane Smith, Dr. Michael Johnson</p>
-                            <p class="publication-venue">International Conference on Machine Learning (ICML), 2023</p>
-                            <p class="publication-date">July 2023</p>
-                            <div class="publication-links">
-                                <a href="#" class="publication-link" aria-label="Download PDF">📄 PDF</a>
-                                <a href="#" class="publication-link" aria-label="View on arXiv">🔗 arXiv</a>
-                                <a href="#" class="publication-link" aria-label="View citation">📚 Cite</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="publication-item" data-year="2023" data-category="journal">
-                        <div class="publication-content">
-                            <h3 class="publication-title">Scalable Microservices Architecture for Real-time Data Processing</h3>
-                            <p class="publication-authors">John Doe, Sarah Wilson</p>
-                            <p class="publication-venue">Journal of Software Engineering, 2023</p>
-                            <p class="publication-date">March 2023</p>
-                            <div class="publication-links">
-                                <a href="#" class="publication-link" aria-label="Download PDF">📄 PDF</a>
-                                <a href="#" class="publication-link" aria-label="View on IEEE">🔗 IEEE</a>
-                                <a href="#" class="publication-link" aria-label="View citation">📚 Cite</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="publication-item" data-year="2022" data-category="conference">
-                        <div class="publication-content">
-                            <h3 class="publication-title">Computer Vision Techniques for Autonomous Vehicle Navigation</h3>
-                            <p class="publication-authors">John Doe, Prof. Robert Chen, Lisa Park</p>
-                            <p class="publication-venue">Conference on Computer Vision and Pattern Recognition (CVPR), 2022</p>
-                            <p class="publication-date">June 2022</p>
-                            <div class="publication-links">
-                                <a href="#" class="publication-link" aria-label="Download PDF">📄 PDF</a>
-                                <a href="#" class="publication-link" aria-label="View on CVPR">🔗 CVPR</a>
-                                <a href="#" class="publication-link" aria-label="View citation">📚 Cite</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="publication-item" data-year="2022" data-category="workshop">
-                        <div class="publication-content">
-                            <h3 class="publication-title">Ethics in AI: Bias Detection and Mitigation Strategies</h3>
-                            <p class="publication-authors">John Doe, Dr. Emily Rodriguez</p>
-                            <p class="publication-venue">Workshop on Fairness in Artificial Intelligence, NeurIPS 2022</p>
-                            <p class="publication-date">December 2022</p>
-                            <div class="publication-links">
-                                <a href="#" class="publication-link" aria-label="Download PDF">📄 PDF</a>
-                                <a href="#" class="publication-link" aria-label="View on NeurIPS">🔗 NeurIPS</a>
-                                <a href="#" class="publication-link" aria-label="View citation">📚 Cite</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="publication-item" data-year="2021" data-category="journal">
-                        <div class="publication-content">
-                            <h3 class="publication-title">Distributed Systems Design Patterns for Cloud Computing</h3>
-                            <p class="publication-authors">John Doe</p>
-                            <p class="publication-venue">ACM Transactions on Computer Systems, 2021</p>
-                            <p class="publication-date">September 2021</p>
-                            <div class="publication-links">
-                                <a href="#" class="publication-link" aria-label="Download PDF">📄 PDF</a>
-                                <a href="#" class="publication-link" aria-label="View on ACM">🔗 ACM</a>
-                                <a href="#" class="publication-link" aria-label="View citation">📚 Cite</a>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Publications will be loaded here -->
                 </div>
             </div>
         </section>
@@ -527,80 +188,7 @@
                     </div>
                 </div>
                 <div class="blogs-grid" id="blogs-grid">
-                    <article class="blog-card">
-                        <div class="blog-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTMwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3QgMTwvdGV4dD4KPHRleHQgeD0iMjAwIiB5PSIxNjAiIGZpbGw9IiM2Qzc1NzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiPkxlYXJuIE1hY2hpbmUgTGVhcm5pbmc8L3RleHQ+Cjwvc3ZnPgo=" alt="Understanding Machine Learning" class="blog-img" loading="lazy">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">November 15, 2023</span>
-                                <span class="blog-category">Tutorial</span>
-                            </div>
-                            <h3 class="blog-title">Understanding Machine Learning: A Beginner's Guide</h3>
-                            <p class="blog-excerpt">Dive deep into the fundamentals of machine learning, covering supervised and unsupervised learning, key algorithms, and practical applications in today's world.</p>
-                            <a href="#" class="blog-read-more">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="blog-card">
-                        <div class="blog-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTMwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3QgMjwvdGV4dD4KPHRleHQgeD0iMjAwIiB5PSIxNjAiIGZpbGw9IiM2Qzc1NzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiPkRldmVsb3BtZW50IEJlc3QgUHJhY3RpY2VzPC90ZXh0Pgo8L3N2Zz4K" alt="Modern Web Development" class="blog-img" loading="lazy">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">October 28, 2023</span>
-                                <span class="blog-category">Development</span>
-                            </div>
-                            <h3 class="blog-title">Modern Web Development: Best Practices for 2024</h3>
-                            <p class="blog-excerpt">Explore the latest trends and best practices in web development, including performance optimization, accessibility, and modern JavaScript frameworks.</p>
-                            <a href="#" class="blog-read-more">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="blog-card">
-                        <div class="blog-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTMwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3QgMzwvdGV4dD4KPHRleHQgeD0iMjAwIiB5PSIxNjAiIGZpbGw9IiM2Qzc1NzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiPkFJIEV0aGljcyBhbmQgU29jaWV0eTwvdGV4dD4KPHRleHQgeD0iMjAwIiB5PSIxODAiIGZpbGw9IiM2Qzc1NzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiPkV4cGxvcmF0aW9uIG9mIGV0aGljYWwgQUk8L3RleHQ+Cjwvc3ZnPgo=" alt="AI Ethics and Society" class="blog-img" loading="lazy">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">October 10, 2023</span>
-                                <span class="blog-category">AI Ethics</span>
-                            </div>
-                            <h3 class="blog-title">AI Ethics and Society: Navigating the Future of Technology</h3>
-                            <p class="blog-excerpt">An exploration of ethical considerations in AI development, including bias mitigation, privacy concerns, and the societal impact of artificial intelligence.</p>
-                            <a href="#" class="blog-read-more">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="blog-card">
-                        <div class="blog-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTMwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3QgNDwvdGV4dD4KPHRleHQgeD0iMjAwIiB5PSIxNjAiIGZpbGw9IiM2Qzc1NzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiPkRhdGEgU2NpZW5jZSBhbmQgQW5hbHl0aWNzPC90ZXh0Pgo8L3N2Zz4K" alt="Data Science and Analytics" class="blog-img" loading="lazy">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">September 22, 2023</span>
-                                <span class="blog-category">Data Science</span>
-                            </div>
-                            <h3 class="blog-title">From Raw Data to Insights: A Complete Guide to Data Analytics</h3>
-                            <p class="blog-excerpt">Learn how to transform raw data into meaningful insights using modern data science techniques, tools, and best practices for effective analysis.</p>
-                            <a href="#" class="blog-read-more">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="blog-card">
-                        <div class="blog-image">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTMwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3QgNTwvdGV4dD4KPHRleHQgeD0iMjAwIiB5PSIxNjAiIGZpbGw9IiM2Qzc1NzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiPkNsb3VkIENvbXB1dGluZyBBcmNoaXRlY3R1cmU8L3RleHQ+Cjwvc3ZnPgo=" alt="Cloud Computing Architecture" class="blog-img" loading="lazy">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">September 5, 2023</span>
-                                <span class="blog-category">Cloud</span>
-                            </div>
-                            <h3 class="blog-title">Building Scalable Applications: Cloud Computing Architecture</h3>
-                            <p class="blog-excerpt">Master the fundamentals of cloud architecture, including microservices, serverless computing, and best practices for building scalable cloud applications.</p>
-                            <a href="#" class="blog-read-more">Read More →</a>
-                        </div>
-                    </article>
+                    <!-- Blog posts will be loaded dynamically -->
                 </div>
             </div>
         </section>
@@ -613,23 +201,8 @@
                     <p class="section-subtitle">Let's discuss your next project</p>
                 </div>
                 <div class="contact-content">
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <h3>📧 Email</h3>
-                            <p><a href="mailto:john.doe@example.com">john.doe@example.com</a></p>
-                        </div>
-                        <div class="contact-item">
-                            <h3>📍 Location</h3>
-                            <p>San Francisco, CA</p>
-                        </div>
-                        <div class="contact-item">
-                            <h3>📱 Phone</h3>
-                            <p><a href="tel:+1234567890">(123) 456-7890</a></p>
-                        </div>
-                        <div class="contact-item">
-                            <h3>🕒 Response Time</h3>
-                            <p>Within 24 hours</p>
-                        </div>
+                    <div class="contact-info" id="contact-info">
+                         <!-- Contact info will be loaded here -->
                     </div>
                     <div class="contact-form">
                         <form id="contact-form" action="mailto:john.doe@example.com" method="post" enctype="text/plain">

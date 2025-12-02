@@ -1,0 +1,62 @@
+[
+  {
+    "title": "AI-Powered Chatbot",
+    "description": "Intelligent conversational AI built with Python and TensorFlow. Features natural language processing and integrates with multiple messaging platforms.",
+    "technologies": ["Python", "TensorFlow", "NLP", "Flask"],
+    "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDE8L3RleHQ+Cjwvc3ZnPgo=",
+    "links": {
+      "demo": "#",
+      "code": "https://github.com/johndoe/ai-chatbot"
+    }
+  },
+  {
+    "title": "E-commerce Platform",
+    "description": "Full-stack e-commerce solution with payment integration, inventory management, and admin dashboard. Built with modern web technologies.",
+    "technologies": ["React", "Node.js", "MongoDB", "Stripe"],
+    "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDI8L3RleHQ+Cjwvc3ZnPgo=",
+    "links": {
+      "demo": "#",
+      "code": "https://github.com/johndoe/ecommerce-platform"
+    }
+  },
+  {
+    "title": "Data Visualization Dashboard",
+    "description": "Interactive dashboard for data analysis with real-time charts and filtering. Processes large datasets and provides actionable insights.",
+    "technologies": ["D3.js", "Python", "Pandas", "Flask"],
+    "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMDA3QkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDM8L3RleHQ+Cjwvc3ZnPgo=",
+    "links": {
+      "demo": "#",
+      "code": "https://github.com/johndoe/data-viz-dashboard"
+    }
+  },
+  {
+    "title": "Fitness Tracking App",
+    "description": "Cross-platform mobile app for fitness tracking with workout plans, progress monitoring, and social features. Available on iOS and Android.",
+    "technologies": ["React Native", "Firebase", "Redux", "Node.js"],
+    "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDQ8L3RleHQ+Cjwvc3ZnPgo=",
+    "links": {
+      "demo": "#",
+      "code": "https://github.com/johndoe/mobile-app"
+    }
+  },
+  {
+    "title": "Smart Home IoT System",
+    "description": "IoT platform for smart home automation with device control, energy monitoring, and security features. Built with Raspberry Pi and cloud integration.",
+    "technologies": ["Python", "Raspberry Pi", "MQTT", "AWS IoT"],
+    "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDU8L3RleHQ+Cjwvc3ZnPgo=",
+    "links": {
+      "demo": "#",
+      "code": "https://github.com/johndoe/smart-home"
+    }
+  },
+  {
+    "title": "Computer Vision Research",
+    "description": "Research project on advanced computer vision techniques for object detection and image segmentation. Published in top-tier conferences.",
+    "technologies": ["PyTorch", "OpenCV", "CUDA", "Jupyter"],
+    "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTEwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij5Qcm9qZWN0IDY8L3RleHQ+Cjwvc3ZnPgo=",
+    "links": {
+      "demo": "#",
+      "code": "https://github.com/johndoe/ml-research"
+    }
+  }
+]

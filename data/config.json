@@ -1,0 +1,37 @@
+{
+  "name": "John Doe",
+  "tagline": "Software Engineer | Researcher | Blogger",
+  "description": "Passionate about creating innovative solutions and sharing knowledge through code and writing.",
+  "about": {
+    "bio": [
+      "Hello! I'm John Doe, a passionate software engineer with over 5 years of experience in full-stack development, machine learning, and technical writing. Currently based in San Francisco, CA, I specialize in building scalable web applications and conducting research in artificial intelligence.",
+      "When I'm not coding, you can find me writing technical blogs, contributing to open-source projects, or exploring the latest developments in AI and software engineering. I believe in continuous learning and sharing knowledge with the developer community."
+    ]
+  },
+  "email": "john.doe@example.com",
+  "location": "San Francisco, CA",
+  "phone": "(123) 456-7890",
+  "responseTime": "Within 24 hours",
+  "social": [
+    {
+      "name": "LinkedIn",
+      "url": "https://linkedin.com/in/johndoe",
+      "icon": "💼"
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com/johndoe",
+      "icon": "💻"
+    },
+    {
+      "name": "Twitter",
+      "url": "https://twitter.com/johndoe",
+      "icon": "🐦"
+    }
+  ],
+  "images": {
+    "profile": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9IjEwNSIgcj0iNDAiIGZpbGw9IiMwMDdCRkYiLz4KPGRhdGEgeD0iNjAiIHk9IjE4MCIgZmlsbD0iIzAwN0JGRiI+SGVsbG8hPC9kYXRhPgo8L3N2Zz4K",
+    "about": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEzNSIgcj0iNjAiIGZpbGw9IiMwMDdCRkYiLz4KPGRhdGEgeD0iMTAwIiB5PSIyODAiIGZpbGw9IiMwMDdCRkYiPkFib3V0IE1lPC9kYXRhPgo8L3N2Zz4K"
+  },
+  "footerUpdated": "November 2023"
+}

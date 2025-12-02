@@ -1,0 +1,8 @@
+{
+  "title": "Building Scalable Applications: Cloud Computing Architecture",
+  "date": "September 5, 2023",
+  "category": "Cloud",
+  "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTMwIiBmaWxsPSIjMDA3QkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3Q8L3RleHQ+Cjwvc3ZnPgo=",
+  "excerpt": "Master the fundamentals of cloud architecture, including microservices, serverless computing, and best practices for building scalable cloud applications.",
+  "link": "#"
+}
