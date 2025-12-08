@@ -597,6 +597,845 @@ function initProjectLightbox() {
     }
 }
 
+// ===== BLOG PAGE GENERATION =====
+function generateBlogPageTemplate(blogData, filename) {
+    const slug = filename.replace('.json', '');
+    const pageTitle = `${blogData.title} | Blog`;
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="${blogData.excerpt}">
+    <meta name="keywords" content="blog, ${blogData.category.toLowerCase()}, technology, development">
+    <meta name="author" content="John Doe">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="${blogData.title}">
+    <meta property="og:description" content="${blogData.excerpt}">
+    <meta property="og:image" content="${blogData.image}">
+    <meta property="og:url" content="https://yourwebsite.com/blogpages/${slug}.html">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="${blogData.title}">
+    <meta property="twitter:description" content="${blogData.excerpt}">
+    <meta property="twitter:image" content="${blogData.image}">
+
+    <title>${pageTitle}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        /* Blog Page Specific Styles */
+        .blog-page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 4rem 0 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .blog-page-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .blog-page-category {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .blog-page-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .blog-page-content h2 {
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+            font-size: 1.8rem;
+        }
+
+        .blog-page-content h3 {
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        .blog-page-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-page-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .blog-page-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            margin: 2rem 0;
+            padding: 1rem 2rem;
+            background: var(--surface-color);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .blog-page-content code {
+            background: var(--surface-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-color);
+        }
+
+        .blog-page-content pre {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .blog-page-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .blog-page-back {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color var(--transition-fast);
+        }
+
+        .blog-page-back:hover {
+            color: var(--accent-color);
+        }
+
+        .blog-page-back::before {
+            content: '←';
+            margin-right: 0.5rem;
+        }
+
+        .blog-page-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .blog-page-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .blog-page-tag {
+            background: var(--surface-color);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Share buttons */
+        .blog-share {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            padding: 1.5rem;
+            background: var(--surface-color);
+            border-radius: 12px;
+        }
+
+        .blog-share-text {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .blog-share-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .share-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .share-button.twitter { background: #1da1f2; }
+        .share-button.facebook { background: #4267b2; }
+        .share-button.linkedin { background: #0077b5; }
+        .share-button.copy { background: var(--accent-color); }
+
+        @media (max-width: 768px) {
+            .blog-page-container {
+                padding: 0 1rem;
+            }
+
+            .blog-page-header {
+                padding: 3rem 0 2rem;
+            }
+
+            .blog-page-meta {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .blog-page-content {
+                font-size: 1rem;
+            }
+
+            .blog-share {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-link sr-only">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html" class="nav-logo">John Doe</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+                    <li><a href="../index.html#about" class="nav-link">About</a></li>
+                    <li><a href="../index.html#education" class="nav-link">Education</a></li>
+                    <li><a href="../index.html#experience" class="nav-link">Experience</a></li>
+                    <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+                    <li><a href="../index.html#publications" class="nav-link">Publications</a></li>
+                    <li><a href="../index.html#blogs" class="nav-link">Blogs</a></li>
+                    <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <header class="blog-page-header">
+            <div class="blog-page-container">
+                <a href="../index.html#blogs" class="blog-page-back">Back to Blogs</a>
+                <h1 style="color: white; font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2;">${blogData.title}</h1>
+                <div class="blog-page-meta">
+                    <span class="blog-date">${blogData.date}</span>
+                    <span class="blog-page-category">${blogData.category}</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="blog-page-container">
+            <!-- Blog Image -->
+            ${blogData.image ? `
+            <div style="margin-bottom: 3rem;">
+                <img src="${blogData.image}" alt="${blogData.title}" style="width: 100%; height: 400px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 20px var(--shadow-color);">
+            </div>
+            ` : ''}
+
+            <!-- Share Buttons -->
+            <div class="blog-share">
+                <span class="blog-share-text">Share this article:</span>
+                <div class="blog-share-buttons">
+                    <a href="#" class="share-button twitter" onclick="shareOnTwitter()" aria-label="Share on Twitter">
+                        <span>🐦</span>
+                    </a>
+                    <a href="#" class="share-button facebook" onclick="shareOnFacebook()" aria-label="Share on Facebook">
+                        <span>📘</span>
+                    </a>
+                    <a href="#" class="share-button linkedin" onclick="shareOnLinkedIn()" aria-label="Share on LinkedIn">
+                        <span>💼</span>
+                    </a>
+                    <a href="#" class="share-button copy" onclick="copyLink()" aria-label="Copy link">
+                        <span>📋</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Blog Content -->
+            <article class="blog-page-content">
+                <div id="blog-content">
+                    <!-- Content will be loaded here -->
+                    <div style="text-align: center; padding: 4rem 0; color: var(--text-secondary);">
+                        <p>Loading blog content...</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Tags (if available) -->
+            ${blogData.tags && blogData.tags.length > 0 ? `
+            <div class="blog-page-tags">
+                ${blogData.tags.map(tag => `<span class="blog-page-tag">${tag}</span>`).join('')}
+            </div>
+            ` : ''}
+
+            <!-- Footer -->
+            <footer class="blog-page-footer">
+                <p>© 2024 John Doe. All rights reserved.</p>
+                <p style="margin-top: 0.5rem;">
+                    <a href="../index.html#contact" style="color: var(--primary-color); text-decoration: none;">Get in touch</a> |
+                    <a href="../index.html#blogs" style="color: var(--primary-color); text-decoration: none;">More articles</a>
+                </p>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../script.js"></script>
+    <script>
+        // Blog-specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load blog content from JSON
+            fetch('../blogs/${filename}')
+                .then(response => response.json())
+                .then(blogData => {
+                    const contentElement = document.getElementById('blog-content');
+                    if (blogData.content) {
+                        contentElement.innerHTML = blogData.content;
+                    } else {
+                        // Generate placeholder content if no content field exists
+                        contentElement.innerHTML = generatePlaceholderContent(blogData);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading blog content:', error);
+                    document.getElementById('blog-content').innerHTML = '<p style="color: var(--text-secondary);">Sorry, there was an error loading this blog post.</p>';
+                });
+
+            // Initialize theme toggle for blog page
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('.theme-icon');
+            const body = document.body;
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = body.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            });
+
+            function setTheme(theme) {
+                body.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+                themeToggle.setAttribute('aria-label',
+                    theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+                );
+            }
+
+            // Share functions
+            window.shareOnTwitter = function() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent('${blogData.title}');
+                window.open(\`https://twitter.com/intent/tweet?url=\${url}&text=\${text}\`, '_blank');
+            };
+
+            window.shareOnFacebook = function() {
+                const url = encodeURIComponent(window.location.href);
+                window.open(\`https://www.facebook.com/sharer/sharer.php?u=\${url}\`, '_blank');
+            };
+
+            window.shareOnLinkedIn = function() {
+                const url = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent('${blogData.title}');
+                window.open(\`https://www.linkedin.com/sharing/share-offsite/?url=\${url}\`, '_blank');
+            };
+
+            window.copyLink = function() {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Link copied to clipboard!');
+                }).catch(() => {
+                    alert('Failed to copy link');
+                });
+            };
+        });
+    </script>
+</body>
+</html>`;
+}
+
+function generateBlogPageTemplate(blogData, filename) {
+    const slug = filename.replace('.json', '');
+    const pageTitle = `${blogData.title} | Blog`;
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="${blogData.excerpt}">
+    <meta name="keywords" content="blog, ${blogData.category.toLowerCase()}, technology, development">
+    <meta name="author" content="John Doe">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="${blogData.title}">
+    <meta property="og:description" content="${blogData.excerpt}">
+    <meta property="og:image" content="${blogData.image}">
+    <meta property="og:url" content="https://yourwebsite.com/blogpages/${slug}.html">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="${blogData.title}">
+    <meta property="twitter:description" content="${blogData.excerpt}">
+    <meta property="twitter:image" content="${blogData.image}">
+
+    <title>${pageTitle}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        /* Blog Page Specific Styles */
+        .blog-page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 4rem 0 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .blog-page-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .blog-page-category {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .blog-page-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .blog-page-content h2 {
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+            font-size: 1.8rem;
+        }
+
+        .blog-page-content h3 {
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        .blog-page-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-page-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .blog-page-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            margin: 2rem 0;
+            padding: 1rem 2rem;
+            background: var(--surface-color);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .blog-page-content code {
+            background: var(--surface-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-color);
+        }
+
+        .blog-page-content pre {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .blog-page-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .blog-page-back {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color var(--transition-fast);
+        }
+
+        .blog-page-back:hover {
+            color: var(--accent-color);
+        }
+
+        .blog-page-back::before {
+            content: '←';
+            margin-right: 0.5rem;
+        }
+
+        .blog-page-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .blog-page-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .blog-page-tag {
+            background: var(--surface-color);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Share buttons */
+        .blog-share {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            padding: 1.5rem;
+            background: var(--surface-color);
+            border-radius: 12px;
+        }
+
+        .blog-share-text {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .blog-share-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .share-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .share-button.twitter { background: #1da1f2; }
+        .share-button.facebook { background: #4267b2; }
+        .share-button.linkedin { background: #0077b5; }
+        .share-button.copy { background: var(--accent-color); }
+
+        @media (max-width: 768px) {
+            .blog-page-container {
+                padding: 0 1rem;
+            }
+
+            .blog-page-header {
+                padding: 3rem 0 2rem;
+            }
+
+            .blog-page-meta {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .blog-page-content {
+                font-size: 1rem;
+            }
+
+            .blog-share {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-link sr-only">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html" class="nav-logo">John Doe</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+                    <li><a href="../index.html#about" class="nav-link">About</a></li>
+                    <li><a href="../index.html#education" class="nav-link">Education</a></li>
+                    <li><a href="../index.html#experience" class="nav-link">Experience</a></li>
+                    <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+                    <li><a href="../index.html#publications" class="nav-link">Publications</a></li>
+                    <li><a href="../index.html#blogs" class="nav-link">Blogs</a></li>
+                    <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <header class="blog-page-header">
+            <div class="blog-page-container">
+                <a href="../index.html#blogs" class="blog-page-back">Back to Blogs</a>
+                <h1 style="color: white; font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2;">${blogData.title}</h1>
+                <div class="blog-page-meta">
+                    <span class="blog-date">${blogData.date}</span>
+                    <span class="blog-page-category">${blogData.category}</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="blog-page-container">
+            <!-- Blog Image -->
+            ${blogData.image ? `
+            <div style="margin-bottom: 3rem;">
+                <img src="${blogData.image}" alt="${blogData.title}" style="width: 100%; height: 400px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 20px var(--shadow-color);">
+            </div>
+            ` : ''}
+
+            <!-- Share Buttons -->
+            <div class="blog-share">
+                <span class="blog-share-text">Share this article:</span>
+                <div class="blog-share-buttons">
+                    <a href="#" class="share-button twitter" onclick="shareOnTwitter()" aria-label="Share on Twitter">
+                        <span>🐦</span>
+                    </a>
+                    <a href="#" class="share-button facebook" onclick="shareOnFacebook()" aria-label="Share on Facebook">
+                        <span>📘</span>
+                    </a>
+                    <a href="#" class="share-button linkedin" onclick="shareOnLinkedIn()" aria-label="Share on LinkedIn">
+                        <span>💼</span>
+                    </a>
+                    <a href="#" class="share-button copy" onclick="copyLink()" aria-label="Copy link">
+                        <span>📋</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Blog Content -->
+            <article class="blog-page-content">
+                <div id="blog-content">
+                    <!-- Content will be loaded here -->
+                    <div style="text-align: center; padding: 4rem 0; color: var(--text-secondary);">
+                        <p>Loading blog content...</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Tags (if available) -->
+            ${blogData.tags && blogData.tags.length > 0 ? `
+            <div class="blog-page-tags">
+                ${blogData.tags.map(tag => `<span class="blog-page-tag">${tag}</span>`).join('')}
+            </div>
+            ` : ''}
+
+            <!-- Footer -->
+            <footer class="blog-page-footer">
+                <p>© 2024 John Doe. All rights reserved.</p>
+                <p style="margin-top: 0.5rem;">
+                    <a href="../index.html#contact" style="color: var(--primary-color); text-decoration: none;">Get in touch</a> |
+                    <a href="../index.html#blogs" style="color: var(--primary-color); text-decoration: none;">More articles</a>
+                </p>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../script.js"></script>
+    <script>
+        // Blog-specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load blog content from JSON
+            fetch('../blogs/${filename}')
+                .then(response => response.json())
+                .then(blogData => {
+                    const contentElement = document.getElementById('blog-content');
+                    if (blogData.content) {
+                        contentElement.innerHTML = blogData.content;
+                    } else {
+                        // Generate placeholder content if no content field exists
+                        contentElement.innerHTML = generatePlaceholderContent(blogData);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading blog content:', error);
+                    document.getElementById('blog-content').innerHTML = '<p style="color: var(--text-secondary);">Sorry, there was an error loading this blog post.</p>';
+                });
+
+            // Initialize theme toggle for blog page
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('.theme-icon');
+            const body = document.body;
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = body.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            });
+
+            function setTheme(theme) {
+                body.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+                themeToggle.setAttribute('aria-label',
+                    theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+                );
+            }
+
+            // Share functions
+            window.shareOnTwitter = function() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent('${blogData.title}');
+                window.open(\`https://twitter.com/intent/tweet?url=\${url}&text=\${text}\`, '_blank');
+            };
+
+            window.shareOnFacebook = function() {
+                const url = encodeURIComponent(window.location.href);
+                window.open(\`https://www.facebook.com/sharer/sharer.php?u=\${url}\`, '_blank');
+            };
+
+            window.shareOnLinkedIn = function() {
+                const url = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent('${blogData.title}');
+                window.open(\`https://www.linkedin.com/sharing/share-offsite/?url=\${url}\`, '_blank');
+            };
+
+            window.copyLink = function() {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Link copied to clipboard!');
+                }).catch(() => {
+                    alert('Failed to copy link');
+                });
+            };
+        });
+    </script>
+</body>
+</html>`;
+}
+
 // ===== BLOG SEARCH FUNCTIONALITY =====
 let blogCards = [];
 let searchTimeout;
@@ -699,7 +1538,7 @@ async function loadBlogs() {
                 if (!blogResponse.ok) continue;
                 
                 const blogData = await blogResponse.json();
-
+                generateBlogPageTemplate(blogData, file);
                 const blogCard = document.createElement('article');
                 blogCard.className = 'blog-card';
                 // Use placeholder image or add logic to load images if they exist in JSON
@@ -714,7 +1553,7 @@ async function loadBlogs() {
                         </div>
                         <h3 class="blog-title">${blogData.title}</h3>
                         <p class="blog-excerpt">${blogData.excerpt}</p>
-                        <a href="${blogData.link}" class="blog-read-more">Read More →</a>
+                        <a href="${file.replace('.json', '.html').replace('blogs/', 'blogpages/')}" class="blog-read-more">Read More →</a>
                     </div>
                 `;
 
